@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ع الماشي - القائمة الرقمية</title>
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5B0606',      // Dark Burgundy
+                        secondary: '#D32F2F',    // Flame Red
+                        warmBeige: '#F4EAD4',    // Warm Beige
+                        cardBg: '#FFFFFF',       // Pure White
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Global CSS Customizations -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #F4EAD4;
+            color: #5B0606;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Hide scrollbar for standard browsers */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Category Active Tab Styling */
+        .active-category-tab {
+            background-color: #D32F2F !important;
+            color: #FFFFFF !important;
+            border-color: #D32F2F !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-28">
+
+    <!-- Header Section -->
+    <header class="bg-primary text-white pb-8 pt-6 rounded-b-[2rem] shadow-lg relative overflow-hidden">
+        <div class="absolute -right-12 -top-12 w-44 h-44 bg-secondary rounded-full opacity-10 blur-xl"></div>
+        <div class="absolute -left-12 -bottom-12 w-44 h-44 bg-secondary rounded-full opacity-10 blur-xl"></div>
+
+        <div class="container mx-auto px-4 text-center">
+            <!-- Restaurant Logo Tag (No Raw Text) -->
+            <div class="flex justify-center mb-3">
+                <img src="images/logo.png" alt="ع الماشي اللوجو" class="h-24 w-auto object-contain drop-shadow-md">
+            </div>
+            
+            <!-- Restaurant Constraints & Badges -->
+            <div class="flex flex-wrap justify-center gap-2 mt-3">
+                <span class="bg-secondary text-white text-xs px-3.5 py-1.5 rounded-full font-bold flex items-center gap-1.5 shadow-sm">
+                    <i class="fas fa-store text-[10px]"></i>
+                    <span>تيك أواي فقط (استلام من الفرع)</span>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="container mx-auto px-4 -mt-4 relative z-10">
+        <div class="relative max-w-md mx-auto shadow-md rounded-full overflow-hidden">
+            <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-primary/60">
+                <i class="fas fa-search text-sm"></i>
+            </span>
+            <input type="text" id="menu-search" oninput="handleSearch()" placeholder="ابحث عن وجبة أو ساندويش..." class="w-full bg-white text-primary text-sm rounded-full pr-11 pl-11 py-3.5 border border-primary/10 focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all">
+            <button id="clear-search-btn" onclick="clearSearch()" class="absolute inset-y-0 left-0 items-center pl-4 text-primary/40 hover:text-secondary hidden">
+                <i class="fas fa-times-circle text-base"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation Category Tabs -->
+    <nav id="category-nav" class="sticky top-0 z-40 bg-[#F4EAD4]/95 backdrop-blur-md border-b border-primary/10 py-3 mt-4 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-2">
+            <div id="category-tabs" class="flex gap-2 overflow-x-auto no-scrollbar scroll-smooth px-2 py-1">
+                <!-- Populated Dynamically -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Container -->
+    <main class="container mx-auto px-4 mt-6 max-w-4xl">
+        <div id="menu-container" class="space-y-10">
+            <!-- Populated Dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-primary text-white py-12 mt-16 rounded-t-[2rem] shadow-inner text-center">
+        <div class="container mx-auto px-4 max-w-md">
+            <div class="flex justify-center mb-4">
+                <img src="images/logo.png" alt="ع الماشي اللوجو" class="h-16 w-auto object-contain">
+            </div>
+            
+            <p class="text-sm text-warmBeige/80">تيك أواي وطعم مميز وسريع على مدار الساعة!</p>
+            
+            <div class="flex justify-center gap-4 mt-6">
+                <a href="tel:201000000000" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all text-white">
+                    <i class="fas fa-phone-alt"></i>
+                </a>
+                <a href="https://wa.me/201000000000" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all text-white">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            
+            <div class="border-t border-white/10 my-6"></div>
+            
+            <p class="text-[11px] text-warmBeige/60">جميع الحقوق محفوظة &copy; 2026 مطعم ع الماشي.</p>
+        </div>
+    </footer>
+
+    <!-- Floating Cart Bar -->
+    <div id="floating-cart" class="fixed bottom-0 inset-x-0 z-40 p-4 transition-transform duration-300 translate-y-full">
+        <div class="max-w-md mx-auto bg-primary text-white rounded-2xl shadow-2xl p-4 flex items-center justify-between border border-white/10">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center relative shadow-inner">
+                    <i class="fas fa-shopping-basket text-lg text-white"></i>
+                    <span id="cart-badge-count" class="absolute -top-2 -right-2 bg-white text-secondary text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-primary shadow">0</span>
+                </div>
+                <div>
+                    <span class="text-xs text-warmBeige/80 block">إجمالي طلبك</span>
+                    <span id="cart-total-price" class="text-base font-extrabold">0 EGP</span>
+                </div>
+            </div>
+            
+            <button onclick="openCartModal()" class="bg-secondary hover:bg-white hover:text-primary text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center gap-2">
+                <span>عرض السلة</span>
+                <i class="fas fa-arrow-left text-xs"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="absolute inset-0 cursor-pointer" onclick="closeCartModal()"></div>
+        
+        <div class="relative bg-white w-full max-w-lg rounded-t-[2rem] sm:rounded-2xl max-h-[90vh] sm:max-h-[85vh] flex flex-col shadow-2xl overflow-hidden transform translate-y-10 transition-transform duration-300">
+            <!-- Modal Header -->
+            <div class="bg-primary text-white px-6 py-4 flex items-center justify-between border-b border-primary/10">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-shopping-basket text-lg text-secondary"></i>
+                    <h3 class="text-lg font-bold">سلّة المشتريات</h3>
+                </div>
+                <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+            </div>
+            
+            <!-- Takeaway Constraints Banner -->
+            <div class="bg-secondary/10 border-b border-secondary/20 px-6 py-3 flex items-center gap-2 text-xs text-secondary font-bold">
+                <i class="fas fa-info-circle text-sm flex-shrink-0"></i>
+                <span>استلام من الفرع - تيك أواي 🥡</span>
+            </div>
+            
+            <!-- Modal Contents -->
+            <div class="flex-1 overflow-y-auto no-scrollbar p-6 space-y-6">
+                <!-- Selected Items List -->
+                <div>
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">تفاصيل الوجبات المطلوبة</h4>
+                    <div id="modal-cart-items" class="space-y-3">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Customer Details Form -->
+                <div class="bg-warmBeige/40 rounded-2xl p-4 border border-warmBeige">
+                    <h4 class="text-sm font-bold text-primary mb-3 flex items-center gap-1.5">
+                        <i class="fas fa-user-edit text-xs text-secondary"></i>
+                        <span>بيانات المستلم لتحضير الطلب</span>
+                    </h4>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <label for="cust-name" class="block text-xs font-semibold text-gray-600 mb-1">الاسم بالكامل <span class="text-secondary">*</span></label>
+                            <input type="text" id="cust-name" placeholder="مثال: أحمد محمد" class="w-full bg-white text-primary text-sm rounded-xl px-3 py-2.5 border border-primary/10 focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary transition-all">
+                            <span id="cust-name-error" class="text-[10px] text-secondary font-bold mt-1 hidden">يرجى إدخال الاسم بالكامل للتحضير</span>
+                        </div>
+                        <div>
+                            <label for="cust-phone" class="block text-xs font-semibold text-gray-600 mb-1">رقم الهاتف <span class="text-secondary">*</span></label>
+                            <input type="tel" id="cust-phone" placeholder="مثال: 01xxxxxxxxx" class="w-full bg-white text-primary text-sm rounded-xl px-3 py-2.5 border border-primary/10 focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary transition-all text-right">
+                            <span id="cust-phone-error" class="text-[10px] text-secondary font-bold mt-1 hidden">يرجى إدخال رقم هاتف مصري صحيح (11 رقم)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pricing Details Summary -->
+                <div class="border-t border-gray-100 pt-4 space-y-2">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">إجمالي الوجبات</span>
+                        <span id="summary-items-count" class="font-bold text-primary">0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">طريقة الاستلام</span>
+                        <span class="font-bold text-secondary bg-secondary/10 px-2.5 py-0.5 rounded text-xs">تيك أواي (من الفرع)</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-200">
+                        <span class="text-base font-extrabold text-primary">الإجمالي النهائي</span>
+                        <span id="summary-total-price" class="text-lg font-black text-secondary">0 EGP</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer Controls -->
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex flex-col gap-2">
+                <button onclick="sendOrderWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba59] text-white py-3.5 rounded-xl font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+                    <i class="fab fa-whatsapp text-lg"></i>
+                    <span>تأكيد وإرسال عبر واتساب</span>
+                </button>
+                <button onclick="clearCart()" class="text-xs text-gray-400 hover:text-secondary font-semibold py-1.5 transition-colors text-center">
+                    <i class="fas fa-trash-alt ml-1"></i> تفريغ السلة بالكامل
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Layer -->
+    <script>
+        // CONFIGURATION: Set the WhatsApp phone number here
+        const WHATSAPP_NUMBER = "201028688854"; 
+
+        // JSON Data Embedded (Cleaned from item-level images, optimized strictly for layout)
+        const menuData = {
+          "restaurant_name": "ع الماشي",
+          "restaurant_logo": "images/logo.png",
+          "currency": "EGP",
+          "menu": [
+            {
+              "category": "المشويات",
+              "category_image": "images/category-grills.png",
+              "note": "جميع المشويات تقدم مع سلطة + عيش + رز أو بطاطس",
+              "items": [
+                {
+                  "name": "فراخ مشوية ع الفحم",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "كاملة", "price": 450},
+                    {"size": "1/2 فرخة", "price": 250}
+                  ]
+                },
+                {
+                  "name": "شيش طاووق",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "كيلو", "price": 500},
+                    {"size": "1/2 كيلو", "price": 300}
+                  ]
+                },
+                {
+                  "name": "صدور جريل",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "كيلو", "price": 550},
+                    {"size": "1/2 كيلو", "price": 350}
+                  ]
+                },
+                {
+                  "name": "ريش",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "كيلو", "price": 1600},
+                    {"size": "1/2 كيلو", "price": 800},
+                    {"size": "1/4 كيلو", "price": 450}
+                  ]
+                },
+                {
+                  "name": "كفتة",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "كيلو", "price": 1000},
+                    {"size": "1/2 كيلو", "price": 550},
+                    {"size": "1/4 كيلو", "price": 300}
+                  ]
+                },
+                {
+                  "name": "ريب آي ستيك",
+                  "note": "صوص فلفل أو مشروم",
+                  "has_variants": false,
+                  "price": 500
+                },
+                {
+                  "name": "صينية كتف ضاني",
+                  "has_variants": false,
+                  "price": 2000,
+                  "unit": "/كيلو"
+                },
+                {
+                  "name": "صينية فخدة ضاني",
+                  "has_variants": false,
+                  "price": 1800,
+                  "unit": "/كيلو"
+                }
+              ]
+            },
+            {
+              "category": "صينية العيلة",
+              "category_image": "images/category-family-section.png",
+              "items": [
+                {
+                  "name": "صينية العيلة",
+                  "description": "4 ريش + فرخة + كيلو كفتة + 1/2 كيلو شيش طاووق + 1/2 كيلو صدور فراخ",
+                  "has_variants": false,
+                  "old_price": 3100,
+                  "price": 2750
+                }
+              ]
+            },
+            {
+              "category": "الساندويشات",
+              "category_image": "images/category-sandwiches.png",
+              "items": [
+                {"name": "كفتة", "has_variants": false, "price": 180},
+                {"name": "برجر كلاسيك", "has_variants": false, "price": 190},
+                {"name": "برجر جبنة", "has_variants": false, "price": 210},
+                {"name": "برجر بيكون", "has_variants": false, "price": 230},
+                {"name": "برجر مشروم", "has_variants": false, "price": 230},
+                {"name": "ميجا برجر", "note": "بيكون + موتزاريلا ستيكس + هالبينو", "has_variants": false, "price": 275},
+                {"name": "حواوشي", "has_variants": false, "price": 150},
+                {"name": "حواوشي ميني", "has_variants": false, "price": 50},
+                {"name": "فراخ بانيه", "has_variants": false, "price": 175},
+                {"name": "ستريبس", "has_variants": false, "price": 175},
+                {"name": "كوردون بلو", "has_variants": false, "price": 230},
+                {"name": "شاورما فراخ", "has_variants": false, "price": 190},
+                {"name": "شاورما فراخ بالبطاطس", "has_variants": false, "price": 135},
+                {"name": "شيش طاووق", "has_variants": false, "price": 160},
+                {"name": "شاورما فراخ فلسطيني", "note": "مشروم جبنة زيتون", "has_variants": false, "price": 220}
+              ]
+            },
+            {
+              "category": "عربية الكبدة",
+              "category_image": "images/category-kibda.png",
+              "items": [
+                {
+                  "name": "كبدة",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "شامي/بلدي", "price": 70},
+                    {"size": "فينو", "price": 50}
+                  ]
+                },
+                {
+                  "name": "سجق شرقي",
+                  "has_variants": true,
+                  "variants": [
+                    {"size": "شامي/بلدي", "price": 100},
+                    {"size": "فينو", "price": 60}
+                  ]
+                }
+              ]
+            },
+            {
+              "category": "الأطباق الجانبية",
+              "category_image": "images/category-sides.png",
+              "items": [
+                {"name": "مكرونة صوص أبيض + فراخ", "has_variants": false, "price": 150},
+                {"name": "أرز بسمتي", "has_variants": false, "price": 50},
+                {"name": "بطاطس صغير", "has_variants": false, "price": 50},
+                {"name": "بطاطس كبير", "has_variants": false, "price": 85},
+                {"name": "ناجتس (6) + بطاطس", "has_variants": false, "price": 150},
+                {"name": "ناجتس (4) + موتزاريلا ستيكس (6)", "has_variants": false, "price": 150},
+                {"name": "موتزاريلا ستيكس (6) + بطاطس", "has_variants": false, "price": 200},
+                {"name": "كوب ذرة صفراء بالزبدة", "has_variants": false, "price": 100},
+                {"name": "ذرة مشوية", "has_variants": false, "price": 100}
+              ]
+            },
+            {
+              "category": "السلطات",
+              "category_image": "images/category-salads.png",
+              "items": [
+                {"name": "طحينة", "has_variants": false, "price": 25},
+                {"name": "بابا غنوج", "has_variants": false, "price": 40},
+                {"name": "سلطة خضرا", "has_variants": false, "price": 25},
+                {"name": "ثومية", "has_variants": false, "price": 40},
+                {"name": "هالبينو", "has_variants": false, "price": 30}
+              ]
+            },
+            {
+              "category": "الفطار",
+              "category_image": "images/category-breakfast.png",
+              "items": [
+                {"name": "ساندويش فول", "has_variants": false, "price": 20},
+                {"name": "ساندويش طعمية", "has_variants": false, "price": 20},
+                {"name": "ساندويش بيض (2 ق)", "has_variants": false, "price": 30},
+                {"name": "ساندويش بطاطس", "has_variants": false, "price": 30},
+                {"name": "ساندويش بابا غنوج", "has_variants": false, "price": 20},
+                {"name": "قرص طعمية", "has_variants": false, "price": 5},
+                {"name": "علبة فول", "has_variants": false, "price": 50}
+              ]
+            },
+            {
+              "category": "الصوصات",
+              "category_image": "images/category-sauces.png",
+              "items": [
+                {"name": "كاتشب", "has_variants": false, "price": 15},
+                {"name": "باربيكيو", "has_variants": false, "price": 15},
+                {"name": "رانش", "has_variants": false, "price": 30},
+                {"name": "بافلو", "has_variants": false, "price": 30},
+                {"name": "هني مسترد", "has_variants": false, "price": 25},
+                {"name": "سيراتشا", "has_variants": false, "price": 35},
+                {"name": "مسترد", "has_variants": false, "price": 15},
+                {"name": "مايونيز", "has_variants": false, "price": 20},
+                {"name": "مايونيز سبايسي", "has_variants": false, "price": 20}
+              ]
+            },
+            {
+              "category": "العروض",
+              "category_image": "images/category-offers.png",
+              "items": [
+                {
+                  "name": "عرض نأنأة البحر",
+                  "description": "4 ناجتس + 4 موتزاريلا ستيكس + بطاطس",
+                  "has_variants": false,
+                  "price": 200
+                }
+              ]
+            },
+            {
+              "category": "الحلوية",
+              "category_image": "images/category-desserts.png",
+              "items": [
+                {"name": "أم علي", "has_variants": false, "price": 90},
+                {"name": "وافل", "has_variants": false, "price": 100},
+                {"name": "كوكيز", "has_variants": false, "price": 100},
+                {"name": "براونيز", "has_variants": false, "price": 100}
+              ]
+            }
+          ]
+        };
+
+        // Icon Map for Nav Categories
+        const categoryIcons = {
+            "المشويات": "fa-fire-alt",
+            "صينية العيلة": "fa-users",
+            "الساندويشات": "fa-hamburger",
+            "عربية الكبدة": "fa-utensils",
+            "الأطباق الجانبية": "fa-circle-dot",
+            "السلطات": "fa-leaf",
+            "الفطار": "fa-egg",
+            "الصوصات": "fa-mortar-pestle",
+            "العروض": "fa-tags",
+            "الحلوية": "fa-cookie-bite"
+        };
+
+        // UI State Variables
+        let cart = {};
+        let isCartModalOpen = false;
+
+        // Render dynamic contents on start
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCategoryTabs();
+            renderMenu();
+            refreshAllCardControls();
+            initScrollObserver();
+            
+            // Auto fill previously submitted details if exists
+            if (localStorage.getItem('alMashy_custName')) {
+                document.getElementById('cust-name').value = localStorage.getItem('alMashy_custName');
+            }
+            if (localStorage.getItem('alMashy_custPhone')) {
+                document.getElementById('cust-phone').value = localStorage.getItem('alMashy_custPhone');
+            }
+        });
+
+        // Generates Horizontal Navigation Links
+        function renderCategoryTabs() {
+            const container = document.getElementById('category-tabs');
+            const tabsHtml = menuData.menu.map((cat, idx) => {
+                const categoryLabel = cat.category === 'الحلوية' ? 'الحلويات' : cat.category;
+                const iconClass = categoryIcons[cat.category] || 'fa-utensils';
+                return `
+                    <button onclick="scrollToCategory(${idx})" class="category-tab flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-full border border-primary/10 bg-white text-primary text-xs font-bold transition-all duration-300 shadow-sm scroll-mx-4 hover:border-secondary hover:text-secondary" data-cat-idx="${idx}">
+                        <i class="fas ${iconClass} text-xs"></i>
+                        <span>${categoryLabel}</span>
+                    </button>
+                `;
+            }).join('');
+            container.innerHTML = tabsHtml;
+        }
+
+        // Generates Grid Layout of Products (Text-Only structure for Items)
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            
+            const html = menuData.menu.map((cat, catIdx) => {
+                const categoryLabel = cat.category === 'الحلوية' ? 'الحلويات' : cat.category;
+                const iconClass = categoryIcons[cat.category] || 'fa-utensils';
+                
+                const itemsHtml = cat.items.map((item, itemIdx) => {
+                    const isSpecialOffer = item.old_price && item.price;
+                    const itemKey = `item-${catIdx}-${itemIdx}`;
+                    
+                    let variantsContainerHtml = '';
+                    let priceSectionHtml = '';
+                    
+                    if (item.has_variants && item.variants && item.variants.length > 0) {
+                        // Render variants lists vertically inside the card (No dropdown list)
+                        variantsContainerHtml = `
+                            <div class="space-y-2 mt-4 pt-3 border-t border-gray-100">
+                                ${item.variants.map((v, vIdx) => `
+                                    <div class="flex items-center justify-between bg-warmBeige/30 px-3 py-2.5 rounded-xl border border-primary/5 hover:border-secondary/10 transition-all">
+                                        <span class="text-xs font-extrabold text-primary">${v.size}</span>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs font-black text-secondary">${v.price} EGP</span>
+                                            <div id="controls-${catIdx}-${itemIdx}-v-${vIdx}">
+                                                <!-- Dynamic Add/Minus/Plus Buttons for each variant specifically -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        // Regular product card layout
+                        let initialUnit = item.unit || '';
+                        priceSectionHtml = `
+                            <div class="flex items-center justify-between mt-5 pt-3 border-t border-gray-100 w-full">
+                                <div class="flex flex-col">
+                                    <div class="flex items-baseline gap-1">
+                                        <span id="price-val-${catIdx}-${itemIdx}" class="text-lg font-extrabold text-primary">${item.price}</span>
+                                        <span class="text-xs text-gray-500 font-semibold">EGP${initialUnit}</span>
+                                        ${isSpecialOffer ? `
+                                            <span class="text-xs text-gray-400 line-through mr-1.5">${item.old_price} EGP</span>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                <div id="controls-${catIdx}-${itemIdx}" class="flex items-center">
+                                    <!-- Dynamic Add/Minus/Plus Buttons for regular product -->
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    return `
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-[#e8dcc4]/40 flex flex-col justify-between hover:shadow-md transition-all duration-300 relative group" data-item-name="${item.name.toLowerCase()}" data-item-desc="${(item.description || '').toLowerCase()}" data-card-id="${itemKey}">
+                            
+                            ${isSpecialOffer ? `
+                                <div class="absolute -top-2.5 left-3 bg-secondary text-white text-[10px] font-extrabold px-3 py-1 rounded-full shadow-md z-10 flex items-center gap-1">
+                                    <i class="fas fa-fire-flame-curved text-xs"></i>
+                                    <span>عرض لفترة محدودة</span>
+                                </div>
+                            ` : ''}
+                            
+                            <div class="w-full">
+                                <h3 class="text-base font-bold text-primary leading-tight group-hover:text-secondary transition-colors">${item.name}</h3>
+                                ${item.description ? `<p class="text-xs text-gray-500 mt-1.5 leading-relaxed">${item.description}</p>` : ''}
+                                ${item.note ? `<p class="text-xs text-[#5B0606]/85 font-semibold mt-2 bg-[#F4EAD4]/50 px-2.5 py-1 rounded-lg border border-primary/5 inline-block"><i class="fas fa-info-circle text-[10px] ml-1 text-secondary"></i>${item.note}</p>` : ''}
+                                ${variantsContainerHtml}
+                            </div>
+                            
+                            ${priceSectionHtml}
+                        </div>
+                    `;
+                }).join('');
+                
+                return `
+                    <section id="category-sec-${catIdx}" class="category-section scroll-mt-24">
+                        <!-- Category Header Container with Aspect Contain (No Crop) -->
+                        <div class="flex items-center gap-4 mb-4 border-b border-[#e8dcc4]/50 pb-2.5">
+                            <div class="w-24 h-16 bg-transparent flex items-center justify-center flex-shrink-0">
+                                <img src="${cat.category_image}" onerror="this.onerror=null; this.src='https://placehold.co/150x100/F4EAD4/5B0606?text=${encodeURIComponent(categoryLabel)}'" class="max-w-full max-h-full object-contain" alt="${categoryLabel}">
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-black text-primary">${categoryLabel}</h2>
+                                ${cat.note ? `<p class="text-xs text-secondary font-semibold mt-0.5">${cat.note}</p>` : ''}
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${itemsHtml}
+                        </div>
+                    </section>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
+        }
+
+        // Generates dynamic ID reference key for variants
+        function getCartItemKey(catIdx, itemIdx, variantIdx) {
+            if (variantIdx !== null && variantIdx !== undefined) {
+                return `item_${catIdx}_${itemIdx}_v_${variantIdx}`;
+            }
+            return `item_${catIdx}_${itemIdx}`;
+        }
+
+        // Dynamic element update based on active state of items in cart
+        function updateCardQuantityControls(catIdx, itemIdx) {
+            const item = menuData.menu[catIdx].items[itemIdx];
+            
+            if (item.has_variants) {
+                // Update each variant row separately (Under-each-other layout)
+                item.variants.forEach((v, vIdx) => {
+                    const key = getCartItemKey(catIdx, itemIdx, vIdx);
+                    const cartItem = cart[key];
+                    const quantity = cartItem ? cartItem.quantity : 0;
+                    
+                    const container = document.getElementById(`controls-${catIdx}-${itemIdx}-v-${vIdx}`);
+                    if (!container) return;
+                    
+                    if (quantity > 0) {
+                        container.innerHTML = `
+                            <div class="flex items-center bg-primary rounded-full p-0.5 shadow-sm border border-primary">
+                                <button onclick="changeQuantity('${key}', -1)" class="w-6 h-6 rounded-full bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none">
+                                    <i class="fas fa-minus text-[9px]"></i>
+                                </button>
+                                <span class="px-2.5 text-white font-extrabold text-xs min-w-[18px] text-center">${quantity}</span>
+                                <button onclick="changeQuantity('${key}', 1)" class="w-6 h-6 rounded-full bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none">
+                                    <i class="fas fa-plus text-[9px]"></i>
+                                </button>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = `
+                            <button onclick="addVariantToCart(${catIdx}, ${itemIdx}, ${vIdx})" class="bg-secondary hover:bg-[#b02525] text-white px-3 py-1.5 rounded-full text-[10px] font-bold shadow-sm transition-all flex items-center gap-1">
+                                <i class="fas fa-plus text-[8px]"></i>
+                                <span>إضافة</span>
+                            </button>
+                        `;
+                    }
+                });
+            } else {
+                // Standard item controls update
+                const key = getCartItemKey(catIdx, itemIdx, null);
+                const cartItem = cart[key];
+                const quantity = cartItem ? cartItem.quantity : 0;
+                
+                const container = document.getElementById(`controls-${catIdx}-${itemIdx}`);
+                if (!container) return;
+                
+                if (quantity > 0) {
+                    container.innerHTML = `
+                        <div class="flex items-center bg-primary rounded-full p-1 shadow-sm border border-primary">
+                            <button onclick="changeQuantity('${key}', -1)" class="w-8 h-8 rounded-full bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="px-3 text-white font-extrabold text-sm min-w-[24px] text-center">${quantity}</span>
+                            <button onclick="changeQuantity('${key}', 1)" class="w-8 h-8 rounded-full bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <button onclick="addInitialToCart(${catIdx}, ${itemIdx})" class="bg-secondary hover:bg-[#b02525] text-white px-5 py-2 rounded-full text-xs font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-1.5">
+                            <i class="fas fa-plus text-[10px]"></i>
+                            <span>إضافة</span>
+                        </button>
+                    `;
+                }
+            }
+        }
+
+        function refreshAllCardControls() {
+            menuData.menu.forEach((cat, catIdx) => {
+                cat.items.forEach((item, itemIdx) => {
+                    updateCardQuantityControls(catIdx, itemIdx);
+                });
+            });
+        }
+
+        // Action when pressing "Add" on variant items directly
+        function addVariantToCart(catIdx, itemIdx, vIdx) {
+            const item = menuData.menu[catIdx].items[itemIdx];
+            const variant = item.variants[vIdx];
+            const key = getCartItemKey(catIdx, itemIdx, vIdx);
+            
+            cart[key] = {
+                catIdx,
+                itemIdx,
+                variantIdx: vIdx,
+                quantity: 1,
+                name: item.name,
+                variantName: variant.size,
+                price: variant.price
+            };
+            
+            updateCardQuantityControls(catIdx, itemIdx);
+            updateFloatingCart();
+            playMicroBounce(catIdx, itemIdx);
+        }
+
+        // Action when pressing "Add" initially on regular items
+        function addInitialToCart(catIdx, itemIdx) {
+            const item = menuData.menu[catIdx].items[itemIdx];
+            const key = getCartItemKey(catIdx, itemIdx, null);
+            
+            cart[key] = {
+                catIdx,
+                itemIdx,
+                variantIdx: null,
+                quantity: 1,
+                name: item.name,
+                variantName: '',
+                price: item.price
+            };
+            
+            updateCardQuantityControls(catIdx, itemIdx);
+            updateFloatingCart();
+            playMicroBounce(catIdx, itemIdx);
+        }
+
+        // Modifies item quantity directly within active state references
+        function changeQuantity(key, delta) {
+            if (!cart[key]) return;
+            
+            cart[key].quantity += delta;
+            const catIdx = cart[key].catIdx;
+            const itemIdx = cart[key].itemIdx;
+            
+            if (cart[key].quantity <= 0) {
+                delete cart[key];
+            }
+            
+            updateCardQuantityControls(catIdx, itemIdx);
+            updateFloatingCart();
+            
+            if (isCartModalOpen) {
+                renderCartModalContents();
+            }
+        }
+
+        // Animates item cards slightly on interaction
+        function playMicroBounce(catIdx, itemIdx) {
+            const card = document.querySelector(`[data-card-id="item-${catIdx}-${itemIdx}"]`);
+            if (card) {
+                card.classList.add('scale-[1.015]', 'border-secondary/30');
+                setTimeout(() => {
+                    card.classList.remove('scale-[1.015]', 'border-secondary/30');
+                }, 250);
+            }
+        }
+
+        // Floating dynamic checkout element display controls
+        function updateFloatingCart() {
+            const keys = Object.keys(cart);
+            let totalItems = 0;
+            let totalPrice = 0;
+            
+            keys.forEach(key => {
+                totalItems += cart[key].quantity;
+                totalPrice += cart[key].price * cart[key].quantity;
+            });
+            
+            const cartBar = document.getElementById('floating-cart');
+            const badgeCount = document.getElementById('cart-badge-count');
+            const totalPriceEl = document.getElementById('cart-total-price');
+            
+            if (totalItems > 0) {
+                badgeCount.textContent = totalItems;
+                totalPriceEl.textContent = `${totalPrice} EGP`;
+                cartBar.classList.remove('translate-y-full');
+            } else {
+                cartBar.classList.add('translate-y-full');
+            }
+        }
+
+        // Scroll to Categories smoothly inside the main view
+        function scrollToCategory(idx) {
+            const targetSection = document.getElementById(`category-sec-${idx}`);
+            if (targetSection) {
+                const offset = 80; 
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = targetSection.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Highlights Active Tabs dynamically on scrolling
+        function initScrollObserver() {
+            const sections = document.querySelectorAll('.category-section');
+            const navTabs = document.querySelectorAll('.category-tab');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '-100px 0px -50% 0px', 
+                threshold: 0
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        const catIdx = sectionId.split('-')[2];
+                        
+                        navTabs.forEach(tab => {
+                            tab.classList.remove('active-category-tab');
+                        });
+                        
+                        const activeTab = document.querySelector(`.category-tab[data-cat-idx="${catIdx}"]`);
+                        if (activeTab) {
+                            activeTab.classList.add('active-category-tab');
+                            activeTab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Search Input Functionality
+        function handleSearch() {
+            const searchVal = document.getElementById('menu-search').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clear-search-btn');
+            
+            if (searchVal.length > 0) {
+                clearBtn.classList.remove('hidden');
+                clearBtn.classList.add('flex');
+            } else {
+                clearBtn.classList.remove('flex');
+                clearBtn.classList.add('hidden');
+            }
+            
+            const categories = document.querySelectorAll('.category-section');
+            categories.forEach(section => {
+                const itemCards = section.querySelectorAll('[data-card-id]');
+                let sectionHasVisibleItems = false;
+                
+                itemCards.forEach(card => {
+                    const name = card.getAttribute('data-item-name');
+                    const desc = card.getAttribute('data-item-desc');
+                    
+                    if (name.includes(searchVal) || desc.includes(searchVal)) {
+                        card.style.display = 'flex';
+                        sectionHasVisibleItems = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                if (sectionHasVisibleItems) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('menu-search');
+            searchInput.value = '';
+            handleSearch();
+            searchInput.focus();
+        }
+
+        // Cart Modal State Toggle & Renders
+        function openCartModal() {
+            isCartModalOpen = true;
+            renderCartModalContents();
+            
+            const modal = document.getElementById('cart-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.children[1].classList.remove('translate-y-10');
+        }
+
+        function closeCartModal() {
+            isCartModalOpen = false;
+            const modal = document.getElementById('cart-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.children[1].classList.add('translate-y-10');
+        }
+
+        function renderCartModalContents() {
+            const keys = Object.keys(cart);
+            const container = document.getElementById('modal-cart-items');
+            const summaryCountEl = document.getElementById('summary-items-count');
+            const summaryTotalEl = document.getElementById('summary-total-price');
+            
+            if (keys.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-400">
+                        <i class="fas fa-shopping-basket text-4xl mb-2 opacity-50 text-secondary"></i>
+                        <p class="text-xs font-semibold">سلة المشتريات فارغة حالياً</p>
+                    </div>
+                `;
+                summaryCountEl.textContent = "0";
+                summaryTotalEl.textContent = "0 EGP";
+                closeCartModal();
+                return;
+            }
+            
+            let totalItems = 0;
+            let totalPrice = 0;
+            let html = '';
+            
+            keys.forEach(key => {
+                const item = cart[key];
+                const itemTotal = item.price * item.quantity;
+                totalItems += item.quantity;
+                totalPrice += itemTotal;
+                
+                html += `
+                    <div class="flex items-center justify-between py-2.5 border-b border-gray-100 last:border-0">
+                        <div class="flex-1 min-w-0 pr-2">
+                            <h5 class="text-sm font-bold text-primary truncate">${item.name}</h5>
+                            ${item.variantName ? `<span class="bg-primary/5 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold inline-block mt-1">${item.variantName}</span>` : ''}
+                            <div class="text-xs text-gray-400 mt-1">${item.price} EGP × ${item.quantity}</div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm font-extrabold text-secondary">${itemTotal} EGP</span>
+                            
+                            <!-- Micro-controls inside modal view -->
+                            <div class="flex items-center bg-primary/5 rounded-lg p-0.5 border border-primary/10">
+                                <button onclick="changeQuantity('${key}', -1)" class="w-6 h-6 rounded-md bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none shadow-sm">
+                                    <i class="fas fa-minus text-[9px]"></i>
+                                </button>
+                                <span class="px-2 text-primary font-black text-xs min-w-[18px] text-center">${item.quantity}</span>
+                                <button onclick="changeQuantity('${key}', 1)" class="w-6 h-6 rounded-md bg-white text-primary hover:bg-warmBeige flex items-center justify-center transition-all focus:outline-none shadow-sm">
+                                    <i class="fas fa-plus text-[9px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            summaryCountEl.textContent = totalItems;
+            summaryTotalEl.textContent = `${totalPrice} EGP`;
+        }
+
+        function clearCart() {
+            if (confirm("هل تريد إفراغ سلة المشتريات بالكامل؟")) {
+                cart = {};
+                refreshAllCardControls();
+                updateFloatingCart();
+                closeCartModal();
+            }
+        }
+
+        // WhatsApp Checkout Validation and Message Packaging
+        function sendOrderWhatsApp() {
+            const nameInput = document.getElementById('cust-name');
+            const phoneInput = document.getElementById('cust-phone');
+            const nameError = document.getElementById('cust-name-error');
+            const phoneError = document.getElementById('cust-phone-error');
+            
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            
+            let isValid = true;
+            
+            if (!name) {
+                nameError.classList.remove('hidden');
+                nameInput.classList.add('border-secondary');
+                isValid = false;
+            } else {
+                nameError.classList.add('hidden');
+                nameInput.classList.remove('border-secondary');
+            }
+            
+            // Validate standard Egyptian mobile numbers
+            const phoneRegex = /^01[0-2,5][0-9]{8}$/;
+            if (!phone || !phoneRegex.test(phone)) {
+                phoneError.classList.remove('hidden');
+                phoneInput.classList.add('border-secondary');
+                isValid = false;
+            } else {
+                phoneError.classList.add('hidden');
+                phoneInput.classList.remove('border-secondary');
+            }
+            
+            if (!isValid) return;
+            
+            // Save contact parameters to LocalStorage
+            localStorage.setItem('alMashy_custName', name);
+            localStorage.setItem('alMashy_custPhone', phone);
+            
+            const keys = Object.keys(cart);
+            if (keys.length === 0) {
+                alert("سلة المشتريات فارغة!");
+                return;
+            }
+            
+            // Format dynamic receipt details
+            let text = `*طلب جديد من ع الماشي* 🍔🍟\n\n`;
+            text += `*الاسم:* ${name}\n`;
+            text += `*رقم الهاتف:* ${phone}\n`;
+            text += `*نوع الطلب:* تيك أواي (استلام من الفرع)\n\n`;
+            text += `*تفاصيل الطلب:*\n`;
+            text += `--------------------\n`;
+            
+            let total = 0;
+            keys.forEach(key => {
+                const item = cart[key];
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                const variantText = item.variantName ? ` (${item.variantName})` : '';
+                text += `- ${item.quantity} × ${item.name}${variantText} | ${itemTotal} EGP\n`;
+            });
+            
+            text += `--------------------\n`;
+            text += `*الإجمالي الكلي:* ${total} EGP\n\n`;
+            text += `يرجى تأكيد استلام الطلب وبدء التحضير للتيك أواي. شكراً لكم! ❤️`;
+            
+            const encodedText = encodeURIComponent(text);
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`;
+            
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
